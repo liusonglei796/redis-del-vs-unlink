@@ -1,6 +1,6 @@
 module test
 
-go 1.23
+go 1.24
 
 require github.com/redis/go-redis/v9 v9.20.1
 
