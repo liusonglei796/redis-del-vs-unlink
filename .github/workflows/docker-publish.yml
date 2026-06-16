@@ -9,6 +9,8 @@ on:
   pull_request:
     branches:
       - main
+  release:
+    types: [published]
 
 jobs:
   # 1. CI 阶段：验证代码质量
@@ -38,8 +40,10 @@ jobs:
   build-and-push:
     name: Build and Push Docker Image
     needs: ci
-    # 仅在 push 到 main 分支或推送 tag 时执行 CD，如果是 pull_request 则不执行推送
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/'))
+    # 仅在发布 release、push 到 main 分支或推送 tag 时执行 CD
+    if: |
+      github.event_name == 'release' ||
+      (github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')))
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
