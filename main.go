@@ -40,7 +40,11 @@ fmt.Printf(">>> UNLINK 客户端耗时结束，经过了 %v\n", time.Since(start
 
 // 获取慢查询日志
 fmt.Println("\n=== 查询 Redis 慢查询日志 ===")
-slowlogs, _ := client.Do(ctx, "SLOWLOG", "GET", 5).Slice()
+slowlogs, err := client.Do(ctx, "SLOWLOG", "GET", 5).Slice()
+if err != nil {
+	fmt.Printf("获取慢查询日志失败: %v\n", err)
+	return
+}
 
 if len(slowlogs) == 0 {
 fmt.Println("未发现慢查询日志。")
@@ -66,10 +70,10 @@ for i := 0; i < size; i++ {
 pipe.SAdd(ctx, keyName, fmt.Sprintf("val_%d", i))
 // 每 10 万条提交一次，防止占用过多内存
 if i > 0 && i%100000 == 0 {
-pipe.Exec(ctx)
+_, _ = pipe.Exec(ctx)
 }
 }
-pipe.Exec(ctx)
+_, _ = pipe.Exec(ctx)
 }
 
 // FormatLog 格式化慢查询日志输出，便于单元测试
