@@ -71,3 +71,8 @@ pipe.Exec(ctx)
 }
 pipe.Exec(ctx)
 }
+
+// FormatLog 格式化慢查询日志输出，便于单元测试
+func FormatLog(duration int64, cmd string) string {
+	return fmt.Sprintf("Duration: %d us | Cmd: %s", duration, cmd)
+}
