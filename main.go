@@ -17,7 +17,7 @@ Addr: "redis:6379", // 走 docker 容器网络
 })
 defer client.Close()
 
-fmt.Println("清理历史慢查询记录...")
+fmt.Println("正在清理历史慢查询记录...")
 client.Do(ctx, "SLOWLOG", "RESET")
 
 fmt.Println("正在制造 2 个大 Key (包含 1,000,000 个元素)，这需要一点时间...")
