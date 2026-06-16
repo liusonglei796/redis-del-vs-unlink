@@ -28,7 +28,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ secrets.DOCKERHUB_USERNAME }}/redis-del-vs-unlink
+          images: docker.io/${{ github.repository_owner }}/redis-del-vs-unlink
           tags: |
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
