@@ -11,7 +11,7 @@ import (
 func main() {
 ctx := context.Background()
 
-// 连接到 Docker Compose 中启动的真实 Redis
+// 连接到 Docker Compose 中启动的真实 Redis (或容器网络中的 Redis)
 client := redis.NewClient(&redis.Options{
 Addr: "redis:6379", // 走 docker 容器网络
 })
